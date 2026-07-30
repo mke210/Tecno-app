@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "699556091168",
+    "project_id": "technology-app-71a54",
+    "storage_bucket": "technology-app-71a54.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699556091168:android:26b09122b4e4b6a80fb345",
+        "android_client_info": {
+          "package_name": "com.technology.taller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClGIMFqQEKR1fYfDWo1-vSxwktrgdFg8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

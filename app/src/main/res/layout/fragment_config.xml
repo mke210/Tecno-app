@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gris_claro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚙️ Configuración"
+            android:textColor="@color/fondo"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- ================= PESTAÑA / SECCIÓN IMPRESORAS ================= -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🖨️ Impresoras"
+                    android:textColor="@color/fondo"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textEstadoImpresora"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/gris_texto"
+                    android:textSize="13sp"
+                    tools:text="Sin miniprinter configurada" />
+
+                <TextView
+                    android:id="@+id/textAvisoBluetooth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="#FDECEA"
+                    android:padding="8dp"
+                    android:textColor="#C0392B"
+                    android:textSize="12sp"
+                    android:text="⚠️ El Bluetooth de tu celular está apagado. Actívalo para poder imprimir."
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Dispositivos Bluetooth emparejados:"
+                    android:textColor="@color/fondo"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="Primero empareja tu miniprinter desde los ajustes de Bluetooth del celular; luego selecciónala aquí como la impresora en uso."
+                    android:textColor="@color/gris_texto"
+                    android:textSize="11sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerImpresoras"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:id="@+id/textSinDispositivos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="No se encontraron dispositivos Bluetooth emparejados."
+                    android:textColor="@color/gris_texto"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnActualizarDispositivos"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="42dp"
+                        android:layout_marginEnd="6dp"
+                        android:backgroundTint="@color/gris_texto"
+                        android:text="🔄 Actualizar lista"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:id="@+id/btnAjustesBluetooth"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="6dp"
+                        android:backgroundTint="@color/primario"
+                        android:text="Ajustes Bluetooth"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnProbarImpresion"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/acento"
+                    android:text="🧾 Probar impresión" />
+
+                <Button
+                    android:id="@+id/btnOlvidarImpresora"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="6dp"
+                    android:backgroundTint="@color/rojo"
+                    android:text="Olvidar miniprinter guardada" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ================= RESPALDO ================= -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📦 Respaldo de datos"
+                    android:textColor="@color/fondo"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnExportar"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/primario"
+                    android:text="Descargar respaldo completo (.json)" />
+
+                <Button
+                    android:id="@+id/btnImportar"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/gris_texto"
+                    android:text="Importar respaldo (.json)" />
+
+                <TextView
+                    android:id="@+id/textProgresoImportacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/gris_texto"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="Technology Zaachila · Guelache 301 · 951 394 5266"
+            android:textColor="@color/gris_texto"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

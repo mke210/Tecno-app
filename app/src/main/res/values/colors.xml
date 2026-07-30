@@ -1,0 +1,10 @@
+<resources>
+    <color name="fondo">#0F172A</color>
+    <color name="primario">#2563EB</color>
+    <color name="primario_oscuro">#1E40AF</color>
+    <color name="acento">#22C55E</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="gris_claro">#F1F5F9</color>
+    <color name="gris_texto">#64748B</color>
+    <color name="rojo">#DC2626</color>
+</resources>

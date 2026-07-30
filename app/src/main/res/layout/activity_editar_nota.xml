@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gris_claro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:background="@color/primario"
+            android:title="Editar / Reimprimir"
+            app:navigationIcon="@android:drawable/ic_menu_revert"
+            app:titleTextColor="@color/blanco" />
+
+        <TextView
+            android:id="@+id/textFolioActual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="#E67E22"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="Folio: 482aB" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del cliente">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:hint="Teléfono">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:hint="Dirección">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Equipo" android:textSize="12sp" android:textStyle="bold" android:textColor="@color/fondo" />
+                <Spinner android:id="@+id/spinnerEquipo" android:layout_width="match_parent" android:layout_height="48dp" />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:layout_gravity="bottom"
+                android:hint="Marca">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputMarca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Tipo de servicio" android:textSize="12sp" android:textStyle="bold" android:textColor="@color/fondo" />
+                <Spinner android:id="@+id/spinnerTipoServicio" android:layout_width="match_parent" android:layout_height="48dp" />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:layout_gravity="bottom"
+                android:hint="Falla(s)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputFallas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Anotaciones">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputAnotaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <CheckBox android:id="@+id/checkCargador" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Cargador" android:textSize="12sp" />
+            <CheckBox android:id="@+id/checkSoloEquipo" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Solo equipo" android:textSize="12sp" />
+            <CheckBox android:id="@+id/checkAmbos" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Dejó ambos" android:textSize="12sp" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD" android:layout_marginTop="14dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="📦 Refacciones / servicios extra"
+            android:textColor="@color/fondo"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/contenedorRefacciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="6dp" />
+
+        <Button
+            android:id="@+id/btnAgregarRefaccion"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/acento"
+            android:text="➕ Agregar pieza"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:hint="Anticipo ($)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputAnticipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:hint="Total final ($)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputPrecioTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:hint="📅 Fecha de entrega (si ya se entregó)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputFechaEntrega"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/btnActualizar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="52dp"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="@color/primario"
+                android:text="💾 Actualizar"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnReimprimir"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="52dp"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="@color/acento"
+                android:text="🖨️ Reimprimir"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/rojo"
+            android:text="🗑️ Eliminar remisión" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

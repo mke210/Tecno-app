@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gris_claro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textAlerta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:visibility="gone" />
+
+        <!-- Folio -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="bottom">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Folio (auto)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputFolio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:textStyle="bold"
+                    android:textColor="#E67E22" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnImprimirFolio"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#F39C12"
+                android:text="🏷️ Folio"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Nombre del cliente">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:hint="Teléfono">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:hint="Dirección">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Equipo recibido" android:textSize="12sp" android:textStyle="bold" android:textColor="@color/fondo" />
+                <Spinner android:id="@+id/spinnerEquipo" android:layout_width="match_parent" android:layout_height="48dp" />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:layout_gravity="bottom"
+                android:hint="Marca (manual)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputMarca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Tipo de reparación" android:textSize="12sp" android:textStyle="bold" android:textColor="@color/fondo" />
+                <Spinner android:id="@+id/spinnerTipoServicio" android:layout_width="match_parent" android:layout_height="48dp" />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:layout_gravity="bottom"
+                android:hint="Falla(s)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputFallas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Anotaciones / diagnóstico inicial">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputAnotaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <CheckBox android:id="@+id/checkCargador" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Cargador" android:textSize="12sp" />
+            <CheckBox android:id="@+id/checkSoloEquipo" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Solo equipo" android:textSize="12sp" />
+            <CheckBox android:id="@+id/checkAmbos" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Dejó ambos" android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Refacciones -->
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD" android:layout_marginTop="14dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="📦 Refacciones / servicios extra"
+            android:textColor="@color/fondo"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/contenedorRefacciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="6dp" />
+
+        <Button
+            android:id="@+id/btnAgregarRefaccion"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/acento"
+            android:text="➕ Agregar pieza o servicio extra"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:hint="Anticipo ($)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputAnticipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:hint="Precio total final ($)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputPrecioTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textAyudaTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="El total se sugiere automáticamente (refacciones + anticipo), pero puedes editarlo libremente."
+            android:textColor="@color/gris_texto"
+            android:textSize="11sp" />
+
+        <!-- Fotos -->
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD" android:layout_marginTop="14dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="📸 Fotos del equipo"
+            android:textColor="@color/fondo"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp">
+
+            <Button
+                android:id="@+id/btnTomarFoto"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="@color/primario"
+                android:text="📷 Cámara"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnElegirGaleria"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="44dp"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="@color/gris_texto"
+                android:text="🖼️ Galería"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+            <LinearLayout
+                android:id="@+id/contenedorFotos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <!-- Botones finales -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primario"
+            android:text="📤 GUARDAR EN FIREBASE" />
+
+        <Button
+            android:id="@+id/btnVistaPrevia"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#F39C12"
+            android:text="👁️ VISTA PREVIA TICKET" />
+
+        <Button
+            android:id="@+id/btnImprimir"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/acento"
+            android:text="🖨️ IMPRIMIR TICKET" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
