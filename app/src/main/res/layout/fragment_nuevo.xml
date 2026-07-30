@@ -39,7 +39,8 @@
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:textStyle="bold"
-                    android:textColor="#E67E22" />
+                    android:textSize="18sp"
+                    android:textColor="#F1C40F" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -47,10 +48,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="56dp"
                 android:layout_marginStart="8dp"
-                android:backgroundTint="#F39C12"
-                android:text="🏷️ Folio"
-                android:textSize="12sp" />
+                android:backgroundTint="#F1C40F"
+                android:text="🏷️ Imprimir\nfolio"
+                android:textColor="@color/fondo"
+                android:textSize="11sp" />
+
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Imprime una etiqueta solo con el folio, para pegarla en la laptop o equipo a reparar."
+            android:textColor="@color/gris_texto"
+            android:textSize="11sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -176,16 +187,26 @@
                 android:minLines="2" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="¿Qué dejó el cliente?"
+            android:textColor="@color/fondo"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupEntrega"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
-            <CheckBox android:id="@+id/checkCargador" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Cargador" android:textSize="12sp" />
-            <CheckBox android:id="@+id/checkSoloEquipo" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Solo equipo" android:textSize="12sp" />
-            <CheckBox android:id="@+id/checkAmbos" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Dejó ambos" android:textSize="12sp" />
-        </LinearLayout>
+            <RadioButton android:id="@+id/radioCargador" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Cargador" android:textSize="12sp" />
+            <RadioButton android:id="@+id/radioSoloEquipo" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Solo equipo" android:textSize="12sp" android:checked="true" />
+            <RadioButton android:id="@+id/radioAmbos" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Dejó ambos" android:textSize="12sp" />
+        </RadioGroup>
 
         <!-- Refacciones -->
         <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD" android:layout_marginTop="14dp" />
@@ -213,11 +234,24 @@
             android:text="➕ Agregar pieza o servicio extra"
             android:textSize="13sp" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:hint="Costo inicial / cotización ($)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputCostoInicial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -225,7 +259,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="6dp"
-                android:hint="Anticipo ($)">
+                android:hint="Anticipo ($, puede ser 0)">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputAnticipo"
                     android:layout_width="match_parent"
@@ -239,7 +273,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="6dp"
-                android:hint="Precio total final ($)">
+                android:hint="Costo final ($)">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputPrecioTotal"
                     android:layout_width="match_parent"
@@ -250,10 +284,23 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textSaldoPendiente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#FEF3C7"
+            android:padding="10dp"
+            android:text="Resta por pagar: $0.00"
+            android:textColor="#92400E"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/textAyudaTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="El total se sugiere automáticamente (refacciones + anticipo), pero puedes editarlo libremente."
+            android:layout_marginTop="6dp"
+            android:text="El costo final se sugiere automáticamente (costo inicial + piezas agregadas), pero puedes editarlo. El anticipo puede quedar en $0 si el cliente no dejó nada."
             android:textColor="@color/gris_texto"
             android:textSize="11sp" />
 

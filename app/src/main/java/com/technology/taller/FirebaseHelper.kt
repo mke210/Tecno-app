@@ -163,6 +163,7 @@ object FirebaseHelper {
             val ro = JSONObject(); ro.put("nombre", r.nombre); ro.put("costo", r.costo); refs.put(ro)
         }
         obj.put("refacciones", refs)
+        obj.put("costo_inicial", nota.costoInicial)
         obj.put("anticipo", nota.anticipo)
         obj.put("precio_total", nota.precioTotal)
         val fotos = JSONArray(); nota.fotos.forEach { fotos.put(it) }
@@ -193,6 +194,7 @@ object FirebaseHelper {
                 nota.refacciones.add(Refaccion(ro.optString("nombre", ""), ro.optDouble("costo", 0.0)))
             }
         }
+        nota.costoInicial = obj.optDouble("costo_inicial", 0.0)
         nota.anticipo = obj.optDouble("anticipo", 0.0)
         nota.precioTotal = obj.optDouble("precio_total", 0.0)
         val fotos = obj.optJSONArray("fotos")

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.technology.taller.databinding.ActivityEditarNotaBinding
 import com.technology.taller.databinding.ItemRefaccionBinding
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -44,6 +45,9 @@ class EditarNotaActivity : AppCompatActivity() {
             refacciones.add(Refaccion())
             renderizarRefacciones()
         }
+        binding.inputCostoInicial.addTextChangedListener(watcher { sugerirTotal() })
+        binding.inputAnticipo.addTextChangedListener(watcher { actualizarSaldoPendiente() })
+        binding.inputPrecioTotal.addTextChangedListener(watcher { actualizarSaldoPendiente() })
         binding.btnActualizar.setOnClickListener { actualizar() }
         binding.btnReimprimir.setOnClickListener { reimprimir() }
         binding.btnEliminar.setOnClickListener { confirmarEliminar() }
@@ -57,9 +61,12 @@ class EditarNotaActivity : AppCompatActivity() {
         binding.inputMarca.setText(nota.marca)
         binding.inputFallas.setText(nota.fallas)
         binding.inputAnotaciones.setText(nota.anotaciones)
-        binding.checkCargador.isChecked = nota.cargoCargador
-        binding.checkSoloEquipo.isChecked = nota.soloEquipo
-        binding.checkAmbos.isChecked = nota.dejoAmbos
+        when {
+            nota.dejoAmbos -> binding.radioGroupEntrega.check(binding.radioAmbos.id)
+            nota.cargoCargador -> binding.radioGroupEntrega.check(binding.radioCargador.id)
+            else -> binding.radioGroupEntrega.check(binding.radioSoloEquipo.id)
+        }
+        binding.inputCostoInicial.setText(if (nota.costoInicial > 0) nota.costoInicial.toString() else "")
         binding.inputAnticipo.setText(if (nota.anticipo > 0) nota.anticipo.toString() else "")
         binding.inputPrecioTotal.setText(if (nota.precioTotal > 0) nota.precioTotal.toString() else "0.00")
         binding.inputFechaEntrega.setText(nota.fechaEntrega)
@@ -72,6 +79,7 @@ class EditarNotaActivity : AppCompatActivity() {
         refacciones.clear()
         refacciones.addAll(nota.refacciones.map { it.copy() })
         renderizarRefacciones()
+        actualizarSaldoPendiente()
     }
 
     private fun renderizarRefacciones() {
@@ -81,13 +89,35 @@ class EditarNotaActivity : AppCompatActivity() {
             item.inputNombreRefaccion.setText(refaccion.nombre)
             item.inputCostoRefaccion.setText(if (refaccion.costo > 0) refaccion.costo.toString() else "")
             item.inputNombreRefaccion.addTextChangedListener(watcher { refaccion.nombre = item.inputNombreRefaccion.text.toString() })
-            item.inputCostoRefaccion.addTextChangedListener(watcher { refaccion.costo = item.inputCostoRefaccion.text.toString().toDoubleOrNull() ?: 0.0 })
+            item.inputCostoRefaccion.addTextChangedListener(watcher {
+                refaccion.costo = item.inputCostoRefaccion.text.toString().toDoubleOrNull() ?: 0.0
+                sugerirTotal()
+            })
             item.btnQuitarRefaccion.setOnClickListener {
                 refacciones.removeAt(index)
                 renderizarRefacciones()
+                sugerirTotal()
             }
             binding.contenedorRefacciones.addView(item.root)
         }
+    }
+
+    /** Sugiere el costo final = costo inicial + todas las piezas/servicios agregados (incluyendo los que se sumen después, en edición). */
+    private fun sugerirTotal() {
+        val costoInicial = binding.inputCostoInicial.text.toString().toDoubleOrNull() ?: 0.0
+        val totalRefacciones = refacciones.sumOf { it.costo }
+        if (!binding.inputPrecioTotal.isFocused) {
+            binding.inputPrecioTotal.setText(String.format(Locale.US, "%.2f", costoInicial + totalRefacciones))
+        }
+        actualizarSaldoPendiente()
+    }
+
+    private fun actualizarSaldoPendiente() {
+        val money = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
+        val total = binding.inputPrecioTotal.text.toString().toDoubleOrNull() ?: 0.0
+        val anticipo = binding.inputAnticipo.text.toString().toDoubleOrNull() ?: 0.0
+        val saldo = (total - anticipo).coerceAtLeast(0.0)
+        binding.textSaldoPendiente.text = "Resta por pagar: ${money.format(saldo)}"
     }
 
     private fun mostrarSelectorFecha() {
@@ -108,10 +138,11 @@ class EditarNotaActivity : AppCompatActivity() {
         nota.tipoServicio = binding.spinnerTipoServicio.selectedItem?.toString() ?: nota.tipoServicio
         nota.fallas = binding.inputFallas.text.toString().trim()
         nota.anotaciones = binding.inputAnotaciones.text.toString().trim()
-        nota.cargoCargador = binding.checkCargador.isChecked
-        nota.soloEquipo = binding.checkSoloEquipo.isChecked
-        nota.dejoAmbos = binding.checkAmbos.isChecked
+        nota.cargoCargador = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioCargador.id
+        nota.soloEquipo = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioSoloEquipo.id
+        nota.dejoAmbos = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioAmbos.id
         nota.refacciones = refacciones.toMutableList()
+        nota.costoInicial = binding.inputCostoInicial.text.toString().toDoubleOrNull() ?: 0.0
         nota.anticipo = binding.inputAnticipo.text.toString().toDoubleOrNull() ?: 0.0
         nota.precioTotal = binding.inputPrecioTotal.text.toString().toDoubleOrNull() ?: 0.0
         nota.fechaEntrega = binding.inputFechaEntrega.text.toString().trim()

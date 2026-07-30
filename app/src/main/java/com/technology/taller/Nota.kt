@@ -43,6 +43,10 @@ data class Nota(
     var dejoAmbos: Boolean = false,
 
     var refacciones: MutableList<Refaccion> = mutableListOf(),
+
+    @get:PropertyName("costo_inicial") @set:PropertyName("costo_inicial")
+    var costoInicial: Double = 0.0,
+
     var anticipo: Double = 0.0,
 
     @get:PropertyName("precio_total") @set:PropertyName("precio_total")

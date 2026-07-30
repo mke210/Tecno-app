@@ -10,27 +10,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/fondo"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="18dp"
         android:paddingBottom="12dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🛠️ TECHNOLOGY ZAACHILA"
-            android:textColor="@color/blanco"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.03" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="Technology Zaachila" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Guelache 301  ·  📞 951 394 5266"
-            android:textColor="#CBD5E1"
-            android:textSize="12sp" />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TECHNOLOGY ZAACHILA"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Guelache 301  ·  📞 951 394 5266"
+                android:textColor="#CBD5E1"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout

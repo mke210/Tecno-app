@@ -12,9 +12,12 @@ object TicketGenerator {
 
     fun generarTicket(context: Context, nota: Nota): String {
         val money = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
-        val cargador = if (nota.cargoCargador) "Sí" else "No"
-        val solo = if (nota.soloEquipo) "Sí (Solo equipo)" else "No (Con cargador)"
-        val ambos = if (nota.dejoAmbos) "Sí (Ambos)" else "No"
+        val entrega = when {
+            nota.dejoAmbos -> "Dejó equipo y cargador"
+            nota.cargoCargador -> "Dejó cargador"
+            nota.soloEquipo -> "Solo equipo (sin cargador)"
+            else -> "No especificado"
+        }
 
         val refaccionesTexto = if (nota.refacciones.isEmpty()) {
             "Ninguna"
@@ -45,15 +48,15 @@ Servicio: ${nota.tipoServicio}
 Falla(s): ${nota.fallas.ifBlank { "N/E" }}
 Anotaciones: ${nota.anotaciones.ifBlank { "Ninguna" }}
 ----------------------------
-Cargador: $cargador
-Equipo: $solo
-Dejó ambos: $ambos
+Entrega: $entrega
 ----------------------------
 Refacciones / Extra:
 $refaccionesTexto
 ----------------------------
+Costo inicial: ${money.format(nota.costoInicial)}
 Anticipo: ${money.format(nota.anticipo)}
-TOTAL FINAL: ${money.format(nota.precioTotal)}
+COSTO FINAL: ${money.format(nota.precioTotal)}
+RESTA POR PAGAR: ${money.format(nota.saldoPendiente)}
 ----------------------------
 Fecha Ingreso: ${nota.fecha}
 Fecha Entrega: ${nota.fechaEntrega.ifBlank { "Pendiente" }}

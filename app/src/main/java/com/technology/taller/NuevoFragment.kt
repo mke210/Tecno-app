@@ -61,7 +61,9 @@ class NuevoFragment : Fragment() {
         binding.btnTomarFoto.setOnClickListener { lanzadorCamara.launch(null) }
         binding.btnElegirGaleria.setOnClickListener { lanzadorGaleria.launch("image/*") }
 
-        binding.inputAnticipo.addTextChangedListener(watcher { sugerirTotal() })
+        binding.inputCostoInicial.addTextChangedListener(watcher { sugerirTotal() })
+        binding.inputAnticipo.addTextChangedListener(watcher { actualizarSaldoPendiente() })
+        binding.inputPrecioTotal.addTextChangedListener(watcher { actualizarSaldoPendiente() })
         sugerirTotal()
 
         binding.btnGuardar.setOnClickListener { guardar(previsualizar = false, imprimir = false) }
@@ -96,13 +98,22 @@ class NuevoFragment : Fragment() {
     }
 
     private fun sugerirTotal() {
+        val costoInicial = binding.inputCostoInicial.text.toString().toDoubleOrNull() ?: 0.0
         val totalRefacciones = refacciones.sumOf { it.costo }
-        val anticipo = binding.inputAnticipo.text.toString().toDoubleOrNull() ?: 0.0
-        // Sugerencia automática (refacciones + anticipo), igual que la versión web.
+        // El costo final se sugiere como: costo inicial + piezas/servicios agregados después.
         // El campo queda habilitado para que el usuario lo ajuste manualmente si lo necesita.
         if (!binding.inputPrecioTotal.isFocused) {
-            binding.inputPrecioTotal.setText(String.format(Locale.US, "%.2f", totalRefacciones + anticipo))
+            binding.inputPrecioTotal.setText(String.format(Locale.US, "%.2f", costoInicial + totalRefacciones))
         }
+        actualizarSaldoPendiente()
+    }
+
+    private fun actualizarSaldoPendiente() {
+        val money = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
+        val total = binding.inputPrecioTotal.text.toString().toDoubleOrNull() ?: 0.0
+        val anticipo = binding.inputAnticipo.text.toString().toDoubleOrNull() ?: 0.0
+        val saldo = (total - anticipo).coerceAtLeast(0.0)
+        binding.textSaldoPendiente.text = "Resta por pagar: ${money.format(saldo)}"
     }
 
     // ---------- Fotos ----------
@@ -144,10 +155,11 @@ class NuevoFragment : Fragment() {
         nota.tipoServicio = binding.spinnerTipoServicio.selectedItem?.toString() ?: TiposReparacion.FORMATEO
         nota.fallas = binding.inputFallas.text.toString().trim()
         nota.anotaciones = binding.inputAnotaciones.text.toString().trim()
-        nota.cargoCargador = binding.checkCargador.isChecked
-        nota.soloEquipo = binding.checkSoloEquipo.isChecked
-        nota.dejoAmbos = binding.checkAmbos.isChecked
+        nota.cargoCargador = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioCargador.id
+        nota.soloEquipo = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioSoloEquipo.id
+        nota.dejoAmbos = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioAmbos.id
         nota.refacciones = refacciones.toMutableList()
+        nota.costoInicial = binding.inputCostoInicial.text.toString().toDoubleOrNull() ?: 0.0
         nota.anticipo = binding.inputAnticipo.text.toString().toDoubleOrNull() ?: 0.0
         nota.precioTotal = binding.inputPrecioTotal.text.toString().toDoubleOrNull() ?: 0.0
         nota.fotos = fotos.toMutableList()
@@ -183,10 +195,9 @@ class NuevoFragment : Fragment() {
         binding.inputFallas.text?.clear()
         binding.inputAnotaciones.text?.clear()
         binding.inputAnticipo.text?.clear()
+        binding.inputCostoInicial.text?.clear()
         binding.inputPrecioTotal.setText("0.00")
-        binding.checkCargador.isChecked = false
-        binding.checkSoloEquipo.isChecked = false
-        binding.checkAmbos.isChecked = false
+        binding.radioGroupEntrega.check(binding.radioSoloEquipo.id)
         refacciones.clear(); renderizarRefacciones()
         fotos.clear(); renderizarFotos()
         generarFolio()
