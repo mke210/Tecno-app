@@ -104,18 +104,36 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/btnReimprimir"
+                android:id="@+id/btnVistaPrevia"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Reimprimir"
+                android:contentDescription="Vista previa"
+                android:src="@android:drawable/ic_menu_view" />
+
+            <ImageButton
+                android:id="@+id/btnReimprimirFolio"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Reimprimir folio"
+                android:src="@android:drawable/ic_menu_edit" />
+
+            <ImageButton
+                android:id="@+id/btnReimprimir"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Reimprimir ticket"
                 android:src="@android:drawable/ic_menu_send" />
 
             <ImageButton
                 android:id="@+id/btnEliminar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Eliminar"
                 android:src="@android:drawable/ic_menu_delete" />

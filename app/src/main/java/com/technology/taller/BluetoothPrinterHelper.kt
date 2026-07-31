@@ -140,17 +140,27 @@ class BluetoothPrinterHelper(private val context: Context) {
         out.write(INIT)
         val lineas = texto.lines()
         var dentroEncabezado = true
-        var primeraLineaTexto = true
-        for (linea in lineas) {
+        for (lineaOriginal in lineas) {
+            var linea = lineaOriginal
+            val grande = linea.startsWith("@@")
+            val negritaNormal = !grande && linea.startsWith("@B")
+            if (grande) linea = linea.removePrefix("@@")
+            if (negritaNormal) linea = linea.removePrefix("@B")
+
             if (dentroEncabezado) {
                 out.write(ALIGN_CENTER)
-                if (primeraLineaTexto && linea.isNotBlank() && !linea.startsWith("=")) {
-                    out.write(BOLD_ON); out.write(DOUBLE_SIZE_ON)
-                    out.write(codificar(linea.trim() + "\n"))
-                    out.write(DOUBLE_SIZE_OFF); out.write(BOLD_OFF)
-                    primeraLineaTexto = false
-                } else {
-                    out.write(codificar(linea.trim() + "\n"))
+                when {
+                    grande -> {
+                        out.write(BOLD_ON); out.write(DOUBLE_SIZE_ON)
+                        out.write(codificar(linea.trim() + "\n"))
+                        out.write(DOUBLE_SIZE_OFF); out.write(BOLD_OFF)
+                    }
+                    negritaNormal -> {
+                        out.write(BOLD_ON)
+                        out.write(codificar(linea.trim() + "\n"))
+                        out.write(BOLD_OFF)
+                    }
+                    else -> out.write(codificar(linea.trim() + "\n"))
                 }
                 if (linea.contains("----")) {
                     dentroEncabezado = false

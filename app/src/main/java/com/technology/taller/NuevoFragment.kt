@@ -17,6 +17,8 @@ import com.technology.taller.databinding.FragmentNuevoBinding
 import com.technology.taller.databinding.ItemFotoBinding
 import com.technology.taller.databinding.ItemRefaccionBinding
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class NuevoFragment : Fragment() {
@@ -52,8 +54,11 @@ class NuevoFragment : Fragment() {
         binding.spinnerTipoServicio.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, TiposReparacion.lista)
 
         generarFolio()
+        generarFechaIngresoPorHoy()
 
         binding.btnImprimirFolio.setOnClickListener { imprimirFolio() }
+        binding.inputFechaIngreso.setOnClickListener { mostrarSelectorFecha(binding.inputFechaIngreso) }
+        binding.inputFechaEntrega.setOnClickListener { mostrarSelectorFecha(binding.inputFechaEntrega) }
         binding.btnAgregarRefaccion.setOnClickListener {
             refacciones.add(Refaccion())
             renderizarRefacciones()
@@ -74,6 +79,22 @@ class NuevoFragment : Fragment() {
     private fun generarFolio() {
         folioActual = FolioGenerator.generar()
         binding.inputFolio.setText(folioActual)
+    }
+
+    private fun generarFechaIngresoPorHoy() {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("es", "MX"))
+        binding.inputFechaIngreso.setText(sdf.format(java.util.Date()))
+    }
+
+    private fun mostrarSelectorFecha(campo: android.widget.EditText) {
+        val cal = Calendar.getInstance()
+        val sdfSoloFecha = SimpleDateFormat("dd/MM/yyyy", Locale("es", "MX"))
+        val sdfHora = SimpleDateFormat("HH:mm", Locale("es", "MX"))
+        android.app.DatePickerDialog(requireContext(), { _, y, m, d ->
+            cal.set(y, m, d)
+            val horaActual = if (campo == binding.inputFechaIngreso) " ${sdfHora.format(java.util.Date())}" else ""
+            campo.setText(sdfSoloFecha.format(cal.time) + horaActual)
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
     }
 
     // ---------- Refacciones ----------
@@ -144,7 +165,6 @@ class NuevoFragment : Fragment() {
             mostrarAlerta("⚠️ Nombre y teléfono son obligatorios.", esError = true)
             return null
         }
-        val sdf = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("es", "MX"))
         val nota = Nota()
         nota.folio = binding.inputFolio.text.toString()
         nota.cliente = cliente
@@ -154,6 +174,7 @@ class NuevoFragment : Fragment() {
         nota.marca = binding.inputMarca.text.toString().trim()
         nota.tipoServicio = binding.spinnerTipoServicio.selectedItem?.toString() ?: TiposReparacion.FORMATEO
         nota.fallas = binding.inputFallas.text.toString().trim()
+        nota.condicionesEquipo = binding.inputCondiciones.text.toString().trim()
         nota.anotaciones = binding.inputAnotaciones.text.toString().trim()
         nota.cargoCargador = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioCargador.id
         nota.soloEquipo = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioSoloEquipo.id
@@ -163,7 +184,8 @@ class NuevoFragment : Fragment() {
         nota.anticipo = binding.inputAnticipo.text.toString().toDoubleOrNull() ?: 0.0
         nota.precioTotal = binding.inputPrecioTotal.text.toString().toDoubleOrNull() ?: 0.0
         nota.fotos = fotos.toMutableList()
-        nota.fecha = sdf.format(java.util.Date())
+        nota.fecha = binding.inputFechaIngreso.text.toString().trim()
+        nota.fechaEntrega = binding.inputFechaEntrega.text.toString().trim()
         return nota
     }
 
@@ -194,13 +216,16 @@ class NuevoFragment : Fragment() {
         binding.inputMarca.text?.clear()
         binding.inputFallas.text?.clear()
         binding.inputAnotaciones.text?.clear()
+        binding.inputCondiciones.text?.clear()
         binding.inputAnticipo.text?.clear()
         binding.inputCostoInicial.text?.clear()
         binding.inputPrecioTotal.setText("0.00")
+        binding.inputFechaEntrega.text?.clear()
         binding.radioGroupEntrega.check(binding.radioSoloEquipo.id)
         refacciones.clear(); renderizarRefacciones()
         fotos.clear(); renderizarFotos()
         generarFolio()
+        generarFechaIngresoPorHoy()
     }
 
     // ---------- Vista previa / impresión ----------

@@ -11,6 +11,8 @@ import java.util.Locale
 class HistorialAdapter(
     private var notas: List<Nota>,
     private val onClick: (Nota) -> Unit,
+    private val onVistaPrevia: (Nota) -> Unit,
+    private val onReimprimirFolio: (Nota) -> Unit,
     private val onReimprimir: (Nota) -> Unit,
     private val onEliminar: (Nota) -> Unit
 ) : RecyclerView.Adapter<HistorialAdapter.VH>() {
@@ -53,6 +55,8 @@ class HistorialAdapter(
                 contenedorFotosMini.addView(img)
             }
 
+            btnVistaPrevia.setOnClickListener { onVistaPrevia(nota) }
+            btnReimprimirFolio.setOnClickListener { onReimprimirFolio(nota) }
             btnReimprimir.setOnClickListener { onReimprimir(nota) }
             btnEliminar.setOnClickListener { onEliminar(nota) }
             root.setOnClickListener { onClick(nota) }

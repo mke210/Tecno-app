@@ -50,6 +50,8 @@ class EditarNotaActivity : AppCompatActivity() {
         binding.inputPrecioTotal.addTextChangedListener(watcher { actualizarSaldoPendiente() })
         binding.btnActualizar.setOnClickListener { actualizar() }
         binding.btnReimprimir.setOnClickListener { reimprimir() }
+        binding.btnVistaPrevia.setOnClickListener { mostrarVistaPrevia() }
+        binding.btnReimprimirFolio.setOnClickListener { reimprimirFolio() }
         binding.btnEliminar.setOnClickListener { confirmarEliminar() }
     }
 
@@ -60,6 +62,7 @@ class EditarNotaActivity : AppCompatActivity() {
         binding.inputDireccion.setText(nota.direccion)
         binding.inputMarca.setText(nota.marca)
         binding.inputFallas.setText(nota.fallas)
+        binding.inputCondiciones.setText(nota.condicionesEquipo)
         binding.inputAnotaciones.setText(nota.anotaciones)
         when {
             nota.dejoAmbos -> binding.radioGroupEntrega.check(binding.radioAmbos.id)
@@ -137,6 +140,7 @@ class EditarNotaActivity : AppCompatActivity() {
         nota.marca = binding.inputMarca.text.toString().trim()
         nota.tipoServicio = binding.spinnerTipoServicio.selectedItem?.toString() ?: nota.tipoServicio
         nota.fallas = binding.inputFallas.text.toString().trim()
+        nota.condicionesEquipo = binding.inputCondiciones.text.toString().trim()
         nota.anotaciones = binding.inputAnotaciones.text.toString().trim()
         nota.cargoCargador = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioCargador.id
         nota.soloEquipo = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioSoloEquipo.id
@@ -173,6 +177,36 @@ class EditarNotaActivity : AppCompatActivity() {
         Toast.makeText(this, "Imprimiendo...", Toast.LENGTH_SHORT).show()
         printerHelper.imprimirNota(actualizada,
             onExito = { runOnUiThread { Toast.makeText(this, "Impreso", Toast.LENGTH_SHORT).show() } },
+            onError = { msg -> runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_LONG).show() } }
+        )
+    }
+
+    private fun mostrarVistaPrevia() {
+        val actualizada = recogerCambios()
+        val texto = TicketGenerator.generarTicket(this, actualizada)
+        val textView = android.widget.TextView(this).apply {
+            text = texto
+            setPadding(32, 24, 32, 24)
+            typeface = android.graphics.Typeface.MONOSPACE
+            textSize = 12f
+        }
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("🧾 Vista previa — Folio ${actualizada.folio}")
+            .setView(android.widget.ScrollView(this).apply { addView(textView) })
+            .setPositiveButton("Imprimir") { _, _ -> reimprimir() }
+            .setNegativeButton("Cerrar", null)
+            .show()
+    }
+
+    private fun reimprimirFolio() {
+        val actualizada = recogerCambios()
+        if (!printerHelper.hayImpresoraConfigurada()) {
+            Toast.makeText(this, "Configura tu miniprinter primero en Config > Impresora", Toast.LENGTH_LONG).show()
+            return
+        }
+        Toast.makeText(this, "Imprimiendo folio...", Toast.LENGTH_SHORT).show()
+        printerHelper.imprimirFolio(actualizada,
+            onExito = { runOnUiThread { Toast.makeText(this, "Folio impreso", Toast.LENGTH_SHORT).show() } },
             onError = { msg -> runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_LONG).show() } }
         )
     }

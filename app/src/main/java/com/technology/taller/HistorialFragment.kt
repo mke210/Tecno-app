@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -34,6 +37,8 @@ class HistorialFragment : Fragment() {
         adapter = HistorialAdapter(
             notas = emptyList(),
             onClick = { nota -> abrirEdicion(nota) },
+            onVistaPrevia = { nota -> mostrarVistaPrevia(nota) },
+            onReimprimirFolio = { nota -> reimprimirFolio(nota) },
             onReimprimir = { nota -> reimprimir(nota) },
             onEliminar = { nota -> confirmarEliminar(nota) }
         )
@@ -93,6 +98,35 @@ class HistorialFragment : Fragment() {
         val intent = Intent(requireContext(), EditarNotaActivity::class.java)
         intent.putExtra("nota", nota)
         startActivity(intent)
+    }
+
+    private fun mostrarVistaPrevia(nota: Nota) {
+        val texto = TicketGenerator.generarTicket(requireContext(), nota)
+        val textView = TextView(requireContext()).apply {
+            text = texto
+            setPadding(32, 24, 32, 24)
+            typeface = android.graphics.Typeface.MONOSPACE
+            textSize = 12f
+        }
+        AlertDialog.Builder(requireContext())
+            .setTitle("🧾 Vista previa — Folio ${nota.folio}")
+            .setView(ScrollView(requireContext()).apply { addView(textView) })
+            .setPositiveButton("Imprimir") { _, _ -> reimprimir(nota) }
+            .setNegativeButton("Cerrar", null)
+            .show()
+    }
+
+    private fun reimprimirFolio(nota: Nota) {
+        if (!printerHelper.hayImpresoraConfigurada()) {
+            Toast.makeText(requireContext(), "Configura tu miniprinter en Config > Impresora", Toast.LENGTH_LONG).show()
+            (activity as? MainActivity)?.irAPestania(2)
+            return
+        }
+        Toast.makeText(requireContext(), "Imprimiendo folio...", Toast.LENGTH_SHORT).show()
+        printerHelper.imprimirFolio(nota,
+            onExito = { activity?.runOnUiThread { Toast.makeText(requireContext(), "Folio impreso", Toast.LENGTH_SHORT).show() } },
+            onError = { msg -> activity?.runOnUiThread { Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show() } }
+        )
     }
 
     private fun reimprimir(nota: Nota) {

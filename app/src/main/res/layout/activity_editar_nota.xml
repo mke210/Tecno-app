@@ -146,6 +146,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:hint="Condiciones en que llegó el equipo">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputCondiciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="Anotaciones">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputAnotaciones"
@@ -288,6 +302,34 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/btnVistaPrevia"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#F39C12"
+                android:text="👁️ Vista previa"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnReimprimirFolio"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="#F1C40F"
+                android:textColor="@color/fondo"
+                android:text="🏷️ Folio"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/btnActualizar"

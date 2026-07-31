@@ -33,6 +33,9 @@ data class Nota(
     var fallas: String = "",
     var anotaciones: String = "",
 
+    @get:PropertyName("condiciones_equipo") @set:PropertyName("condiciones_equipo")
+    var condicionesEquipo: String = "",
+
     @get:PropertyName("cargo_cargador") @set:PropertyName("cargo_cargador")
     var cargoCargador: Boolean = false,
 
