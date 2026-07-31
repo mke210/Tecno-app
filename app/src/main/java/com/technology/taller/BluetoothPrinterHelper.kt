@@ -37,6 +37,7 @@ class BluetoothPrinterHelper(private val context: Context) {
         private val BOLD_OFF = byteArrayOf(0x1B, 0x45, 0x00)
         private val DOUBLE_SIZE_ON = byteArrayOf(0x1D, 0x21, 0x11)
         private val DOUBLE_SIZE_OFF = byteArrayOf(0x1D, 0x21, 0x00)
+        private val MEDIUM_SIZE_ON = byteArrayOf(0x1D, 0x21, 0x01) // altura x2, ancho normal (un paso más grande que el texto normal, sin llegar a doble-doble)
         private val CUT_PAPER = byteArrayOf(0x1D, 0x56, 0x01)
         private const val MAX_INTENTOS = 2
     }
@@ -143,8 +144,10 @@ class BluetoothPrinterHelper(private val context: Context) {
         for (lineaOriginal in lineas) {
             var linea = lineaOriginal
             val grande = linea.startsWith("@@")
-            val negritaNormal = !grande && linea.startsWith("@B")
+            val mediano = !grande && linea.startsWith("@M")
+            val negritaNormal = !grande && !mediano && linea.startsWith("@B")
             if (grande) linea = linea.removePrefix("@@")
+            if (mediano) linea = linea.removePrefix("@M")
             if (negritaNormal) linea = linea.removePrefix("@B")
 
             if (dentroEncabezado) {
@@ -152,6 +155,11 @@ class BluetoothPrinterHelper(private val context: Context) {
                 when {
                     grande -> {
                         out.write(BOLD_ON); out.write(DOUBLE_SIZE_ON)
+                        out.write(codificar(linea.trim() + "\n"))
+                        out.write(DOUBLE_SIZE_OFF); out.write(BOLD_OFF)
+                    }
+                    mediano -> {
+                        out.write(BOLD_ON); out.write(MEDIUM_SIZE_ON)
                         out.write(codificar(linea.trim() + "\n"))
                         out.write(DOUBLE_SIZE_OFF); out.write(BOLD_OFF)
                     }

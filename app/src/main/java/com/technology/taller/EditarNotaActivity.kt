@@ -35,8 +35,8 @@ class EditarNotaActivity : AppCompatActivity() {
         nota = notaRecibida
 
         binding.toolbar.setNavigationOnClickListener { finish() }
-        binding.spinnerEquipo.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, TiposEquipo.lista)
-        binding.spinnerTipoServicio.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, TiposReparacion.lista)
+        binding.spinnerEquipo.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, TiposEquipo.lista).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+        binding.spinnerTipoServicio.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, TiposReparacion.lista).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
 
         precargar()
 

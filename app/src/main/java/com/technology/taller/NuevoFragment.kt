@@ -50,8 +50,8 @@ class NuevoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         printerHelper = BluetoothPrinterHelper(requireContext())
 
-        binding.spinnerEquipo.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, TiposEquipo.lista)
-        binding.spinnerTipoServicio.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, TiposReparacion.lista)
+        binding.spinnerEquipo.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, TiposEquipo.lista).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+        binding.spinnerTipoServicio.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, TiposReparacion.lista).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
 
         generarFolio()
         generarFechaIngresoPorHoy()

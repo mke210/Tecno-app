@@ -1,8 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.NotaRemision" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <!--
+        Tema forzado a modo CLARO (Light, no DayNight). Toda la app está
+        diseñada con fondos claros; si se dejaba en DayNight, un celular en
+        modo oscuro pintaba los textos en blanco sobre nuestros fondos
+        claros y quedaban invisibles. Aquí se fija explícitamente cada
+        color de texto para que nunca dependa del modo oscuro del sistema.
+    -->
+    <style name="Theme.NotaRemision" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primario</item>
         <item name="colorPrimaryDark">@color/primario_oscuro</item>
         <item name="colorAccent">@color/acento</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+
+        <item name="colorSurface">@color/blanco</item>
+        <item name="colorOnSurface">@color/fondo</item>
+        <item name="colorBackground">@color/gris_claro</item>
+        <item name="colorOnBackground">@color/fondo</item>
         <item name="android:windowBackground">@color/gris_claro</item>
+
+        <item name="android:textColorPrimary">@color/fondo</item>
+        <item name="android:textColorSecondary">@color/gris_texto</item>
+        <item name="android:textColorHint">@color/gris_texto</item>
+        <item name="android:textColor">@color/fondo</item>
+
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 </resources>

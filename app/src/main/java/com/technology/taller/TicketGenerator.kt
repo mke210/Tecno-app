@@ -40,8 +40,8 @@ object TicketGenerator {
 
         return """
 ============================
-@B$primeraPalabra
-@B$segundaPalabra
+@M$primeraPalabra
+@M$segundaPalabra
    Servicio Técnico Laptops
    $direccion, Oaxaca
    Cel: $telefono
