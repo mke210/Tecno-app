@@ -14,7 +14,7 @@
 
         <item name="colorSurface">@color/blanco</item>
         <item name="colorOnSurface">@color/fondo</item>
-        <item name="colorBackground">@color/gris_claro</item>
+        <item name="android:colorBackground">@color/gris_claro</item>
         <item name="colorOnBackground">@color/fondo</item>
         <item name="android:windowBackground">@color/gris_claro</item>
 
