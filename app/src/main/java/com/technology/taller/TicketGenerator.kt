@@ -92,14 +92,13 @@ Firma de conformidad del cliente
     }
 
     fun etiquetaFolio(context: Context, nota: Nota): String {
-        val nombreNegocio = context.getString(R.string.negocio_nombre)
-        val direccion = context.getString(R.string.negocio_direccion)
         return """
 ================================
 @@FOLIO: ${nota.folio}
+   Fecha: ${nota.fecha}
    Cliente: ${nota.cliente.ifBlank { "Cliente" }}
-   ${nombreNegocio.uppercase()}
-   $direccion, Oaxaca
+   Tel: ${nota.telefono.ifBlank { "N/E" }}
+   Dir: ${nota.direccion.ifBlank { "N/E" }}
 ================================
         """.trimIndent()
     }

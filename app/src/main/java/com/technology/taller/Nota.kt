@@ -89,9 +89,10 @@ object TiposReparacion {
     const val FORMATEO = "Formateo de Sistema"
     const val CAMBIO_PIEZA = "Cambio de Pieza"
     const val MANTENIMIENTO = "Mantenimiento Preventivo"
+    const val REVISION_GENERAL = "Revisión General"
     const val DIAGNOSTICO = "Diagnóstico General"
 
-    val lista = listOf(FORMATEO, CAMBIO_PIEZA, MANTENIMIENTO, DIAGNOSTICO)
+    val lista = listOf(FORMATEO, CAMBIO_PIEZA, MANTENIMIENTO, REVISION_GENERAL, DIAGNOSTICO)
 }
 
 object TiposEquipo {

@@ -79,40 +79,18 @@
             android:textColor="@color/gris_texto"
             android:textSize="11sp" />
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:hint="📅 Fecha de ingreso">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputFechaIngreso"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:hint="📅 Fecha de ingreso">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputFechaIngreso"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                android:hint="📅 Fecha de entrega (estimada)">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputFechaEntrega"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                android:focusable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -359,6 +337,19 @@
             android:textColor="#92400E"
             android:textSize="15sp"
             android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="📅 Fecha de entrega (estimada)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputFechaEntrega"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textAyudaTotal"
