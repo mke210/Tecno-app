@@ -52,6 +52,7 @@ class EditarNotaActivity : AppCompatActivity() {
         binding.btnReimprimir.setOnClickListener { reimprimir() }
         binding.btnVistaPrevia.setOnClickListener { mostrarVistaPrevia() }
         binding.btnReimprimirFolio.setOnClickListener { reimprimirFolio() }
+        binding.btnWhatsapp.setOnClickListener { enviarWhatsApp() }
         binding.btnEliminar.setOnClickListener { confirmarEliminar() }
     }
 
@@ -183,7 +184,7 @@ class EditarNotaActivity : AppCompatActivity() {
 
     private fun mostrarVistaPrevia() {
         val actualizada = recogerCambios()
-        val texto = TicketGenerator.generarTicket(this, actualizada)
+        val texto = TicketGenerator.textoPlano(TicketGenerator.generarTicket(this, actualizada))
         val textView = android.widget.TextView(this).apply {
             text = texto
             setPadding(32, 24, 32, 24)
@@ -194,8 +195,14 @@ class EditarNotaActivity : AppCompatActivity() {
             .setTitle("🧾 Vista previa — Folio ${actualizada.folio}")
             .setView(android.widget.ScrollView(this).apply { addView(textView) })
             .setPositiveButton("Imprimir") { _, _ -> reimprimir() }
+            .setNeutralButton("📲 WhatsApp") { _, _ -> WhatsAppHelper.enviarTicket(this, actualizada) }
             .setNegativeButton("Cerrar", null)
             .show()
+    }
+
+    private fun enviarWhatsApp() {
+        val actualizada = recogerCambios()
+        WhatsAppHelper.enviarTicket(this, actualizada)
     }
 
     private fun reimprimirFolio() {

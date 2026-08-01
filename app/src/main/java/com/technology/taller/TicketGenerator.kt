@@ -18,6 +18,7 @@ object TicketGenerator {
 
     fun generarTicket(context: Context, nota: Nota): String {
         val money = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
+        val config = NegocioConfig(context)
         val entrega = when {
             nota.dejoAmbos -> "Dejó equipo y cargador"
             nota.cargoCargador -> "Dejó cargador"
@@ -31,9 +32,10 @@ object TicketGenerator {
             nota.refacciones.joinToString("\n") { "  * ${it.nombre}: ${money.format(it.costo)}" }
         }
 
-        val nombreNegocio = context.getString(R.string.negocio_nombre)
-        val direccion = context.getString(R.string.negocio_direccion)
-        val telefono = context.getString(R.string.negocio_telefono)
+        val nombreNegocio = config.nombre()
+        val direccion = config.direccion()
+        val telefono = config.telefono()
+        val lema = config.lema()
         val partesNombre = nombreNegocio.trim().split(" ", limit = 2)
         val primeraPalabra = partesNombre.getOrElse(0) { nombreNegocio }.uppercase()
         val segundaPalabra = partesNombre.getOrElse(1) { "" }.uppercase()
@@ -42,8 +44,8 @@ object TicketGenerator {
 ============================
 @M$primeraPalabra
 @M$segundaPalabra
-   Servicio Técnico Laptops
-   $direccion, Oaxaca
+   $lema
+   $direccion
    Cel: $telefono
 ============================
 Folio: ${nota.folio.ifBlank { "N/A" }}
@@ -72,14 +74,10 @@ RESTA POR PAGAR: ${money.format(nota.saldoPendiente)}
 Fecha Ingreso: ${nota.fecha.ifBlank { "N/E" }}
 Fecha Entrega: ${nota.fechaEntrega.ifBlank { "Pendiente" }}
 ============================
-¡Gracias por preferirnos!
+${config.mensajeDespedida()}
 ============================
 
-AVISO LEGAL: Si el cliente no
-pasa después de 3 meses por su
-equipo, $nombreNegocio no se hace
-responsable de la pérdida total
-o parcial del equipo.
+AVISO LEGAL: ${config.avisoLegal()}
 ============================
 
 Acepto las condiciones,
@@ -101,5 +99,22 @@ Firma de conformidad del cliente
    Dir: ${nota.direccion.ifBlank { "N/E" }}
 ================================
         """.trimIndent()
+    }
+
+    /**
+     * Quita los prefijos "@M"/"@B"/"@@" que solo tienen sentido para la
+     * impresora térmica (indican negrita/tamaño). Se usa para mostrar el
+     * ticket en pantalla (vista previa) o mandarlo por WhatsApp, donde esos
+     * prefijos no deben verse.
+     */
+    fun textoPlano(texto: String): String {
+        return texto.lines().joinToString("\n") { linea ->
+            when {
+                linea.startsWith("@@") -> linea.removePrefix("@@")
+                linea.startsWith("@M") -> linea.removePrefix("@M")
+                linea.startsWith("@B") -> linea.removePrefix("@B")
+                else -> linea
+            }
+        }
     }
 }

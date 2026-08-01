@@ -31,7 +31,15 @@ class MainActivity : AppCompatActivity() {
             tab.text = titulos[position]
         }.attach()
 
+        actualizarHeader()
         pedirPermisos()
+    }
+
+    /** Refresca el encabezado con los datos del negocio guardados en Config. */
+    fun actualizarHeader() {
+        val config = NegocioConfig(this)
+        binding.textNombreNegocioHeader.text = config.nombre().uppercase()
+        binding.textDatosNegocioHeader.text = "${config.direccion()}  ·  📞 ${config.telefono()}"
     }
 
     private fun pedirPermisos() {

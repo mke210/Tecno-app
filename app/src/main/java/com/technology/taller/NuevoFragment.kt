@@ -74,6 +74,7 @@ class NuevoFragment : Fragment() {
         binding.btnGuardar.setOnClickListener { guardar(previsualizar = false, imprimir = false) }
         binding.btnVistaPrevia.setOnClickListener { mostrarVistaPrevia() }
         binding.btnImprimir.setOnClickListener { guardar(previsualizar = false, imprimir = true) }
+        binding.btnWhatsapp.setOnClickListener { enviarWhatsApp() }
     }
 
     private fun generarFolio() {
@@ -231,7 +232,7 @@ class NuevoFragment : Fragment() {
     // ---------- Vista previa / impresión ----------
     private fun mostrarVistaPrevia() {
         val nota = construirNota() ?: return
-        val texto = TicketGenerator.generarTicket(requireContext(), nota)
+        val texto = TicketGenerator.textoPlano(TicketGenerator.generarTicket(requireContext(), nota))
         val textView = TextView(requireContext()).apply {
             text = texto
             setPadding(32, 24, 32, 24)
@@ -242,8 +243,14 @@ class NuevoFragment : Fragment() {
             .setTitle("🧾 Vista previa")
             .setView(android.widget.ScrollView(requireContext()).apply { addView(textView) })
             .setPositiveButton("Imprimir") { _, _ -> imprimirNota(nota) }
+            .setNeutralButton("📲 WhatsApp") { _, _ -> WhatsAppHelper.enviarTicket(requireContext(), nota) }
             .setNegativeButton("Cerrar", null)
             .show()
+    }
+
+    private fun enviarWhatsApp() {
+        val nota = construirNota() ?: return
+        WhatsAppHelper.enviarTicket(requireContext(), nota)
     }
 
     private fun imprimirNota(nota: Nota) {

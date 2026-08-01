@@ -430,9 +430,17 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
             android:backgroundTint="@color/acento"
             android:text="🖨️ IMPRIMIR TICKET" />
+
+        <Button
+            android:id="@+id/btnWhatsapp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="#25D366"
+            android:text="📲 ENVIAR POR WHATSAPP" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

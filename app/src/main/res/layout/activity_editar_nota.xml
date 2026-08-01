@@ -353,6 +353,15 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnWhatsapp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#25D366"
+            android:text="📲 Enviar por WhatsApp"
+            android:textSize="13sp" />
+
+        <Button
             android:id="@+id/btnEliminar"
             android:layout_width="match_parent"
             android:layout_height="46dp"
