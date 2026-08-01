@@ -20,38 +20,54 @@
             android:textAlignment="center"
             android:visibility="gone" />
 
-        <!-- Folio -->
+        <!-- Folio (compacto) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="bottom">
+            android:gravity="center_vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Folio (auto)">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputFolio"
-                    android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/bg_folio_chip"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
+                    android:text="FOLIO"
+                    android:textColor="@color/gris_texto"
+                    android:textSize="9sp"
                     android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="#F1C40F" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:letterSpacing="0.08" />
+
+                <TextView
+                    android:id="@+id/inputFolio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="#B8860B"
+                    tools:text="171Rh"
+                    xmlns:tools="http://schemas.android.com/tools" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnImprimirFolio"
                 android:layout_width="wrap_content"
-                android:layout_height="56dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="8dp"
                 android:backgroundTint="#F1C40F"
-                android:text="🏷️ Imprimir\nfolio"
+                android:text="🏷️ Folio"
                 android:textColor="@color/fondo"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:paddingHorizontal="12dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp" />
 
         </LinearLayout>
 
@@ -59,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Imprime una etiqueta solo con el folio, para pegarla en la laptop o equipo a reparar."
+            android:text="Imprime una etiqueta con el folio, teléfono, dirección y fecha, para pegarla en el equipo."
             android:textColor="@color/gris_texto"
             android:textSize="11sp" />
 
