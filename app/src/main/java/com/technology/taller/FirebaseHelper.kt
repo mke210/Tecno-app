@@ -65,7 +65,7 @@ object FirebaseHelper {
         onError: (Exception) -> Unit
     ): ListenerRegistration {
         return db.collection(COLECCION)
-            .orderBy("fecha", Query.Direction.DESCENDING)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .limit(30)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {

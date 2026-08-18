@@ -145,6 +145,71 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- ================= PRECIOS DE SERVICIOS ================= -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="💲 Precios de servicios"
+                    android:textColor="@color/fondo"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Servicios frecuentes con su precio. Aparecerán como botones de acceso rápido al agregar piezas/servicios en una remisión."
+                    android:textColor="@color/gris_texto"
+                    android:textSize="11sp" />
+
+                <LinearLayout
+                    android:id="@+id/contenedorPrecios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <Button
+                    android:id="@+id/btnAgregarPrecio"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="4dp"
+                    android:backgroundTint="@color/primario"
+                    android:text="➕ Agregar servicio"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnGuardarPrecios"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/acento"
+                    android:text="💾 Guardar precios" />
+
+                <Button
+                    android:id="@+id/btnRestablecerPrecios"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="6dp"
+                    android:backgroundTint="@color/gris_texto"
+                    android:text="Restablecer precios de ejemplo" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- ================= PESTAÑA / SECCIÓN IMPRESORAS ================= -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

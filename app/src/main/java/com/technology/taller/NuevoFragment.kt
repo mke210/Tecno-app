@@ -55,6 +55,7 @@ class NuevoFragment : Fragment() {
 
         generarFolio()
         generarFechaIngresoPorHoy()
+        renderizarPreciosRapidos()
 
         binding.btnImprimirFolio.setOnClickListener { imprimirFolio() }
         binding.inputFechaIngreso.setOnClickListener { mostrarSelectorFecha(binding.inputFechaIngreso) }
@@ -75,6 +76,11 @@ class NuevoFragment : Fragment() {
         binding.btnVistaPrevia.setOnClickListener { mostrarVistaPrevia() }
         binding.btnImprimir.setOnClickListener { guardar(previsualizar = false, imprimir = true) }
         binding.btnWhatsapp.setOnClickListener { enviarWhatsApp() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (_binding != null) renderizarPreciosRapidos()
     }
 
     private fun generarFolio() {
@@ -99,6 +105,37 @@ class NuevoFragment : Fragment() {
     }
 
     // ---------- Refacciones ----------
+    private fun renderizarPreciosRapidos() {
+        val money = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
+        binding.contenedorPreciosRapidos.removeAllViews()
+        val precios = PreciosConfig(requireContext()).obtenerPrecios()
+        if (precios.isEmpty()) {
+            binding.textPreciosRapidos.visibility = View.GONE
+            return
+        }
+        binding.textPreciosRapidos.visibility = View.VISIBLE
+        precios.forEach { precio ->
+            val boton = android.widget.Button(requireContext()).apply {
+                text = "${precio.nombre}\n${money.format(precio.precio)}"
+                textSize = 11f
+                isAllCaps = false
+                setPadding(24, 8, 24, 8)
+                backgroundTintList = android.content.res.ColorStateList.valueOf(resources.getColor(R.color.primario, null))
+                setTextColor(resources.getColor(R.color.blanco, null))
+            }
+            val params = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params.marginEnd = 12
+            boton.layoutParams = params
+            boton.setOnClickListener {
+                refacciones.add(Refaccion(precio.nombre, precio.precio))
+                renderizarRefacciones()
+                sugerirTotal()
+                Toast.makeText(requireContext(), "Agregado: ${precio.nombre}", Toast.LENGTH_SHORT).show()
+            }
+            binding.contenedorPreciosRapidos.addView(boton)
+        }
+    }
+
     private fun renderizarRefacciones() {
         binding.contenedorRefacciones.removeAllViews()
         refacciones.forEachIndexed { index, refaccion ->
@@ -243,14 +280,28 @@ class NuevoFragment : Fragment() {
             .setTitle("🧾 Vista previa")
             .setView(android.widget.ScrollView(requireContext()).apply { addView(textView) })
             .setPositiveButton("Imprimir") { _, _ -> imprimirNota(nota) }
-            .setNeutralButton("📲 WhatsApp") { _, _ -> WhatsAppHelper.enviarTicket(requireContext(), nota) }
+            .setNeutralButton("📲 WhatsApp") { _, _ -> ofrecerEnvioWhatsApp(nota) }
             .setNegativeButton("Cerrar", null)
+            .show()
+    }
+
+    private fun ofrecerEnvioWhatsApp(nota: Nota) {
+        if (nota.fotos.isEmpty()) {
+            WhatsAppHelper.enviarTicket(requireContext(), nota)
+            return
+        }
+        AlertDialog.Builder(requireContext())
+            .setTitle("📲 Enviar por WhatsApp")
+            .setMessage("Esta remisión tiene ${nota.fotos.size} foto(s) del equipo. WhatsApp no deja mandar texto y fotos juntos automáticamente, así que son 2 pasos:\n\n1️⃣ Enviar el ticket (abre el chat del cliente)\n2️⃣ Enviar las fotos (elige el mismo chat)")
+            .setPositiveButton("1️⃣ Enviar ticket") { _, _ -> WhatsAppHelper.enviarTicket(requireContext(), nota) }
+            .setNeutralButton("2️⃣ Enviar fotos") { _, _ -> WhatsAppHelper.enviarFotos(requireContext(), nota.fotos) }
+            .setNegativeButton("Cancelar", null)
             .show()
     }
 
     private fun enviarWhatsApp() {
         val nota = construirNota() ?: return
-        WhatsAppHelper.enviarTicket(requireContext(), nota)
+        ofrecerEnvioWhatsApp(nota)
     }
 
     private fun imprimirNota(nota: Nota) {

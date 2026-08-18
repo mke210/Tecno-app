@@ -195,14 +195,28 @@ class EditarNotaActivity : AppCompatActivity() {
             .setTitle("🧾 Vista previa — Folio ${actualizada.folio}")
             .setView(android.widget.ScrollView(this).apply { addView(textView) })
             .setPositiveButton("Imprimir") { _, _ -> reimprimir() }
-            .setNeutralButton("📲 WhatsApp") { _, _ -> WhatsAppHelper.enviarTicket(this, actualizada) }
+            .setNeutralButton("📲 WhatsApp") { _, _ -> ofrecerEnvioWhatsApp(actualizada) }
             .setNegativeButton("Cerrar", null)
+            .show()
+    }
+
+    private fun ofrecerEnvioWhatsApp(nota: Nota) {
+        if (nota.fotos.isEmpty()) {
+            WhatsAppHelper.enviarTicket(this, nota)
+            return
+        }
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("📲 Enviar por WhatsApp")
+            .setMessage("Esta remisión tiene ${nota.fotos.size} foto(s) del equipo. WhatsApp no deja mandar texto y fotos juntos automáticamente, así que son 2 pasos:\n\n1️⃣ Enviar el ticket (abre el chat del cliente)\n2️⃣ Enviar las fotos (elige el mismo chat)")
+            .setPositiveButton("1️⃣ Enviar ticket") { _, _ -> WhatsAppHelper.enviarTicket(this, nota) }
+            .setNeutralButton("2️⃣ Enviar fotos") { _, _ -> WhatsAppHelper.enviarFotos(this, nota.fotos) }
+            .setNegativeButton("Cancelar", null)
             .show()
     }
 
     private fun enviarWhatsApp() {
         val actualizada = recogerCambios()
-        WhatsAppHelper.enviarTicket(this, actualizada)
+        ofrecerEnvioWhatsApp(actualizada)
     }
 
     private fun reimprimirFolio() {

@@ -49,4 +49,28 @@ object PhotoUtils {
         val alto = (bitmap.height * ratio).toInt()
         return Bitmap.createScaledBitmap(bitmap, ANCHO_MAX, alto, true)
     }
+
+    /**
+     * Escribe las fotos (base64) como archivos JPEG temporales en la caché
+     * de la app y devuelve sus Uri "content://" (vía FileProvider), listas
+     * para compartir por WhatsApp u otra app — no se pueden compartir
+     * directamente como texto base64.
+     */
+    fun fotosATemporales(context: Context, fotos: List<String>): List<Uri> {
+        val carpeta = java.io.File(context.cacheDir, "fotos").apply { mkdirs() }
+        return fotos.mapIndexedNotNull { index, base64 ->
+            try {
+                val bitmap = base64ABitmap(base64) ?: return@mapIndexedNotNull null
+                val archivo = java.io.File(carpeta, "foto_$index.jpg")
+                java.io.FileOutputStream(archivo).use { out ->
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 85, out)
+                }
+                androidx.core.content.FileProvider.getUriForFile(
+                    context, "${context.packageName}.fileprovider", archivo
+                )
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
 }

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.technology.taller.databinding.FragmentConfigBinding
+import com.technology.taller.databinding.ItemPrecioServicioBinding
 import java.io.OutputStreamWriter
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -29,6 +30,8 @@ class ConfigFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var printerHelper: BluetoothPrinterHelper
     private lateinit var negocioConfig: NegocioConfig
+    private lateinit var preciosConfig: PreciosConfig
+    private val precios = mutableListOf<PrecioServicio>()
 
     private val lanzadorGuardarJson = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         if (uri != null) exportarA(uri)
@@ -46,10 +49,12 @@ class ConfigFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         printerHelper = BluetoothPrinterHelper(requireContext())
         negocioConfig = NegocioConfig(requireContext())
+        preciosConfig = PreciosConfig(requireContext())
 
         cargarListaImpresoras()
         actualizarEstadoImpresora()
         cargarDatosNegocio()
+        cargarPrecios()
 
         binding.btnActualizarDispositivos.setOnClickListener {
             cargarListaImpresoras()
@@ -64,6 +69,13 @@ class ConfigFragment : Fragment() {
         binding.btnGuardarNegocio.setOnClickListener { guardarDatosNegocio() }
         binding.btnRestablecerNegocio.setOnClickListener { restablecerDatosNegocio() }
 
+        binding.btnAgregarPrecio.setOnClickListener {
+            precios.add(PrecioServicio())
+            renderizarPrecios()
+        }
+        binding.btnGuardarPrecios.setOnClickListener { guardarPrecios() }
+        binding.btnRestablecerPrecios.setOnClickListener { restablecerPrecios() }
+
         binding.btnExportar.setOnClickListener {
             val nombre = "${negocioConfig.nombre().replace(" ", "_")}_Backup_${SimpleDateFormat("yyyy-MM-dd", Locale.US).format(java.util.Date())}.json"
             lanzadorGuardarJson.launch(nombre)
@@ -71,6 +83,54 @@ class ConfigFragment : Fragment() {
         binding.btnImportar.setOnClickListener {
             lanzadorAbrirJson.launch(arrayOf("application/json"))
         }
+    }
+
+    // ---------- Precios de servicios ----------
+    private fun cargarPrecios() {
+        precios.clear()
+        precios.addAll(preciosConfig.obtenerPrecios())
+        renderizarPrecios()
+    }
+
+    private fun renderizarPrecios() {
+        binding.contenedorPrecios.removeAllViews()
+        precios.forEachIndexed { index, precio ->
+            val item = ItemPrecioServicioBinding.inflate(layoutInflater, binding.contenedorPrecios, false)
+            item.inputNombrePrecio.setText(precio.nombre)
+            item.inputValorPrecio.setText(if (precio.precio > 0) precio.precio.toString() else "")
+            item.inputNombrePrecio.addTextChangedListener(watcher { precio.nombre = item.inputNombrePrecio.text.toString() })
+            item.inputValorPrecio.addTextChangedListener(watcher { precio.precio = item.inputValorPrecio.text.toString().toDoubleOrNull() ?: 0.0 })
+            item.btnQuitarPrecio.setOnClickListener {
+                precios.removeAt(index)
+                renderizarPrecios()
+            }
+            binding.contenedorPrecios.addView(item.root)
+        }
+    }
+
+    private fun guardarPrecios() {
+        preciosConfig.guardarPrecios(precios.filter { it.nombre.isNotBlank() })
+        cargarPrecios()
+        Toast.makeText(requireContext(), "✅ Precios guardados", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun restablecerPrecios() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Restablecer precios")
+            .setMessage("¿Volver a los precios de ejemplo?")
+            .setPositiveButton("Restablecer") { _, _ ->
+                preciosConfig.restablecer()
+                cargarPrecios()
+                Toast.makeText(requireContext(), "Precios restablecidos", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun watcher(onChange: () -> Unit) = object : android.text.TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { onChange() }
+        override fun afterTextChanged(s: android.text.Editable?) {}
     }
 
     private fun cargarDatosNegocio() {

@@ -37,6 +37,46 @@ object WhatsAppHelper {
         }
     }
 
+    /**
+     * Manda las fotos del equipo por WhatsApp. Van SIEMPRE por separado del
+     * texto del ticket: WhatsApp no ofrece una forma de que otra app abra
+     * un chat ya con texto Y fotos adjuntas al mismo tiempo, así que esto
+     * abre el selector de WhatsApp para elegir el chat (lo normal es elegir
+     * el mismo cliente al que ya le mandaste el ticket).
+     */
+    fun enviarFotos(context: Context, fotos: List<String>) {
+        if (fotos.isEmpty()) {
+            Toast.makeText(context, "Esta remisión no tiene fotos del equipo.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val uris = PhotoUtils.fotosATemporales(context, fotos)
+        if (uris.isEmpty()) {
+            Toast.makeText(context, "No se pudieron preparar las fotos para enviar.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        try {
+            val intent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                type = "image/*"
+                putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setPackage("com.whatsapp")
+            }
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            // Si no tiene WhatsApp normal (o falla), mostrar el selector general para elegir otra app
+            try {
+                val intentGenerico = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                    type = "image/*"
+                    putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                context.startActivity(Intent.createChooser(intentGenerico, "Enviar fotos del equipo"))
+            } catch (e2: Exception) {
+                Toast.makeText(context, "No se pudieron enviar las fotos: ${e2.message}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     /** Deja solo dígitos y agrega el código de país (52, México) si hacen falta. */
     private fun normalizarTelefono(telefono: String): String? {
         val soloDigitos = telefono.filter { it.isDigit() }
