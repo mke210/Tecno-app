@@ -118,7 +118,7 @@
                 android:layout_marginStart="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Reimprimir folio"
-                android:src="@android:drawable/ic_menu_edit" />
+                android:src="@drawable/ic_label_tag" />
 
             <ImageButton
                 android:id="@+id/btnReimprimir"
@@ -127,7 +127,7 @@
                 android:layout_marginStart="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Reimprimir ticket"
-                android:src="@android:drawable/ic_menu_send" />
+                android:src="@drawable/ic_print" />
 
             <ImageButton
                 android:id="@+id/btnEliminar"

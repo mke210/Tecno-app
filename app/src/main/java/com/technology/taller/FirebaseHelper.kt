@@ -157,8 +157,10 @@ object FirebaseHelper {
         obj.put("condiciones_equipo", nota.condicionesEquipo)
         obj.put("anotaciones", nota.anotaciones)
         obj.put("cargo_cargador", nota.cargoCargador)
-        obj.put("solo_equipo", nota.soloEquipo)
-        obj.put("dejo_ambos", nota.dejoAmbos)
+        obj.put("dejo_teclado", nota.dejoTeclado)
+        obj.put("dejo_mouse", nota.dejoMouse)
+        obj.put("dejo_cable", nota.dejoCable)
+        obj.put("otros_accesorios", nota.otrosAccesorios)
         val refs = JSONArray()
         nota.refacciones.forEach { r ->
             val ro = JSONObject(); ro.put("nombre", r.nombre); ro.put("costo", r.costo); refs.put(ro)
@@ -187,8 +189,10 @@ object FirebaseHelper {
         nota.condicionesEquipo = obj.optString("condiciones_equipo", "")
         nota.anotaciones = obj.optString("anotaciones", "")
         nota.cargoCargador = obj.optBoolean("cargo_cargador", false)
-        nota.soloEquipo = obj.optBoolean("solo_equipo", false)
-        nota.dejoAmbos = obj.optBoolean("dejo_ambos", false)
+        nota.dejoTeclado = obj.optBoolean("dejo_teclado", false)
+        nota.dejoMouse = obj.optBoolean("dejo_mouse", false)
+        nota.dejoCable = obj.optBoolean("dejo_cable", false)
+        nota.otrosAccesorios = obj.optString("otros_accesorios", "")
         val refs = obj.optJSONArray("refacciones")
         if (refs != null) {
             for (i in 0 until refs.length()) {

@@ -127,20 +127,24 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="46dp"
                     android:id="@+id/btnGuardarNegocio"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:backgroundTint="@color/acento"
-                    android:text="💾 Guardar datos del negocio" />
+                    android:text="💾 Guardar datos del negocio" android:textAllCaps="false" />
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="42dp"
                     android:id="@+id/btnRestablecerNegocio"
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:backgroundTint="@color/gris_texto"
-                    android:text="Restablecer valores originales" />
+                    android:text="Restablecer valores" android:textAllCaps="false" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -183,29 +187,35 @@
                     android:orientation="vertical" />
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="44dp"
                     android:id="@+id/btnAgregarPrecio"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/primario"
                     android:text="➕ Agregar servicio"
-                    android:textSize="13sp" />
+                    android:textSize="13sp" android:textAllCaps="false" />
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="46dp"
                     android:id="@+id/btnGuardarPrecios"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@color/acento"
-                    android:text="💾 Guardar precios" />
+                    android:text="💾 Guardar precios" android:textAllCaps="false" />
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="42dp"
                     android:id="@+id/btnRestablecerPrecios"
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:backgroundTint="@color/gris_texto"
-                    android:text="Restablecer precios de ejemplo" />
+                    android:text="Restablecer precios" android:textAllCaps="false" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -294,41 +304,49 @@
                     android:orientation="horizontal">
 
                     <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="42dp"
                         android:id="@+id/btnActualizarDispositivos"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="42dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="6dp"
                         android:backgroundTint="@color/gris_texto"
                         android:text="🔄 Actualizar lista"
-                        android:textSize="11sp" />
+                        android:textSize="11sp" android:textAllCaps="false" />
 
                     <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="42dp"
                         android:id="@+id/btnAjustesBluetooth"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="42dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:backgroundTint="@color/primario"
                         android:text="Ajustes Bluetooth"
-                        android:textSize="11sp" />
+                        android:textSize="11sp" android:textAllCaps="false" />
                 </LinearLayout>
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="46dp"
                     android:id="@+id/btnProbarImpresion"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:backgroundTint="@color/acento"
-                    android:text="🧾 Probar impresión" />
+                    android:text="🧾 Probar impresión" android:textAllCaps="false" />
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="42dp"
                     android:id="@+id/btnOlvidarImpresora"
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:backgroundTint="@color/rojo"
-                    android:text="Olvidar miniprinter guardada" />
+                    android:text="Olvidar miniprinter" android:textAllCaps="false" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -356,20 +374,24 @@
                     android:textStyle="bold" />
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="46dp"
                     android:id="@+id/btnExportar"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@color/primario"
-                    android:text="Descargar respaldo completo (.json)" />
+                    android:text="Descargar respaldo (.json)" android:textAllCaps="false" />
 
                 <Button
+                    android:paddingVertical="8dp"
+                    android:minHeight="46dp"
                     android:id="@+id/btnImportar"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:backgroundTint="@color/gris_texto"
-                    android:text="Importar respaldo (.json)" />
+                    android:text="Importar respaldo (.json)" android:textAllCaps="false" />
 
                 <TextView
                     android:id="@+id/textProgresoImportacion"

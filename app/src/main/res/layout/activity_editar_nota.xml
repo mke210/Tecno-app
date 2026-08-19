@@ -173,22 +173,63 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="¿Qué dejó el cliente?"
+            android:text="¿Qué dejó el cliente? (marca todo lo que aplique)"
             android:textColor="@color/fondo"
             android:textSize="12sp"
             android:textStyle="bold" />
 
-        <RadioGroup
-            android:id="@+id/radioGroupEntrega"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/grupoAccesorios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:orientation="horizontal">
+            app:singleLine="false">
 
-            <RadioButton android:id="@+id/radioCargador" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Cargador" android:textSize="12sp" />
-            <RadioButton android:id="@+id/radioSoloEquipo" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Solo equipo" android:textSize="12sp" />
-            <RadioButton android:id="@+id/radioAmbos" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Dejó ambos" android:textSize="12sp" />
-        </RadioGroup>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/checkCargador"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="🔌 Cargador" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/checkTeclado"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="⌨️ Teclado" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/checkMouse"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="🖱️ Mouse" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/checkCable"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="🔋 Cable de corriente" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Otros accesorios (opcional)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputOtrosAccesorios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#DDDDDD" android:layout_marginTop="14dp" />
         <TextView

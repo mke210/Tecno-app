@@ -19,12 +19,7 @@ object TicketGenerator {
     fun generarTicket(context: Context, nota: Nota): String {
         val money = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
         val config = NegocioConfig(context)
-        val entrega = when {
-            nota.dejoAmbos -> "Dejó equipo y cargador"
-            nota.cargoCargador -> "Dejó cargador"
-            nota.soloEquipo -> "Solo equipo (sin cargador)"
-            else -> "No especificado"
-        }
+        val entrega = nota.accesoriosTexto
 
         val refaccionesTexto = if (nota.refacciones.isEmpty()) {
             "Ninguna"

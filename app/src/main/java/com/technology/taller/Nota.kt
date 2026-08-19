@@ -39,11 +39,17 @@ data class Nota(
     @get:PropertyName("cargo_cargador") @set:PropertyName("cargo_cargador")
     var cargoCargador: Boolean = false,
 
-    @get:PropertyName("solo_equipo") @set:PropertyName("solo_equipo")
-    var soloEquipo: Boolean = false,
+    @get:PropertyName("dejo_teclado") @set:PropertyName("dejo_teclado")
+    var dejoTeclado: Boolean = false,
 
-    @get:PropertyName("dejo_ambos") @set:PropertyName("dejo_ambos")
-    var dejoAmbos: Boolean = false,
+    @get:PropertyName("dejo_mouse") @set:PropertyName("dejo_mouse")
+    var dejoMouse: Boolean = false,
+
+    @get:PropertyName("dejo_cable") @set:PropertyName("dejo_cable")
+    var dejoCable: Boolean = false,
+
+    @get:PropertyName("otros_accesorios") @set:PropertyName("otros_accesorios")
+    var otrosAccesorios: String = "",
 
     var refacciones: MutableList<Refaccion> = mutableListOf(),
 
@@ -78,6 +84,18 @@ data class Nota(
     @get:Exclude
     val totalRefacciones: Double
         get() = refacciones.sumOf { it.costo }
+
+    @get:Exclude
+    val accesoriosTexto: String
+        get() {
+            val items = mutableListOf<String>()
+            if (cargoCargador) items.add("Cargador")
+            if (dejoTeclado) items.add("Teclado")
+            if (dejoMouse) items.add("Mouse")
+            if (dejoCable) items.add("Cable de corriente")
+            if (otrosAccesorios.isNotBlank()) items.add(otrosAccesorios.trim())
+            return if (items.isEmpty()) "Solo equipo (sin accesorios)" else items.joinToString(", ")
+        }
 }
 
 data class Refaccion(
@@ -96,5 +114,5 @@ object TiposReparacion {
 }
 
 object TiposEquipo {
-    val lista = listOf("Laptop", "PC", "Celular", "Tableta", "Disco Duro", "Monitor", "Otro")
+    val lista = listOf("Laptop", "PC", "All in One", "Celular", "Tableta", "Disco Duro", "Monitor", "Otro")
 }

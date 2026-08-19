@@ -214,9 +214,11 @@ class NuevoFragment : Fragment() {
         nota.fallas = binding.inputFallas.text.toString().trim()
         nota.condicionesEquipo = binding.inputCondiciones.text.toString().trim()
         nota.anotaciones = binding.inputAnotaciones.text.toString().trim()
-        nota.cargoCargador = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioCargador.id
-        nota.soloEquipo = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioSoloEquipo.id
-        nota.dejoAmbos = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioAmbos.id
+        nota.cargoCargador = binding.checkCargador.isChecked
+        nota.dejoTeclado = binding.checkTeclado.isChecked
+        nota.dejoMouse = binding.checkMouse.isChecked
+        nota.dejoCable = binding.checkCable.isChecked
+        nota.otrosAccesorios = binding.inputOtrosAccesorios.text.toString().trim()
         nota.refacciones = refacciones.toMutableList()
         nota.costoInicial = binding.inputCostoInicial.text.toString().toDoubleOrNull() ?: 0.0
         nota.anticipo = binding.inputAnticipo.text.toString().toDoubleOrNull() ?: 0.0
@@ -259,7 +261,11 @@ class NuevoFragment : Fragment() {
         binding.inputCostoInicial.text?.clear()
         binding.inputPrecioTotal.setText("0.00")
         binding.inputFechaEntrega.text?.clear()
-        binding.radioGroupEntrega.check(binding.radioSoloEquipo.id)
+        binding.checkCargador.isChecked = false
+        binding.checkTeclado.isChecked = false
+        binding.checkMouse.isChecked = false
+        binding.checkCable.isChecked = false
+        binding.inputOtrosAccesorios.text?.clear()
         refacciones.clear(); renderizarRefacciones()
         fotos.clear(); renderizarFotos()
         generarFolio()

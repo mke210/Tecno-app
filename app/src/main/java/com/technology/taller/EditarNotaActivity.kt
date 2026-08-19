@@ -65,11 +65,11 @@ class EditarNotaActivity : AppCompatActivity() {
         binding.inputFallas.setText(nota.fallas)
         binding.inputCondiciones.setText(nota.condicionesEquipo)
         binding.inputAnotaciones.setText(nota.anotaciones)
-        when {
-            nota.dejoAmbos -> binding.radioGroupEntrega.check(binding.radioAmbos.id)
-            nota.cargoCargador -> binding.radioGroupEntrega.check(binding.radioCargador.id)
-            else -> binding.radioGroupEntrega.check(binding.radioSoloEquipo.id)
-        }
+        binding.checkCargador.isChecked = nota.cargoCargador
+        binding.checkTeclado.isChecked = nota.dejoTeclado
+        binding.checkMouse.isChecked = nota.dejoMouse
+        binding.checkCable.isChecked = nota.dejoCable
+        binding.inputOtrosAccesorios.setText(nota.otrosAccesorios)
         binding.inputCostoInicial.setText(if (nota.costoInicial > 0) nota.costoInicial.toString() else "")
         binding.inputAnticipo.setText(if (nota.anticipo > 0) nota.anticipo.toString() else "")
         binding.inputPrecioTotal.setText(if (nota.precioTotal > 0) nota.precioTotal.toString() else "0.00")
@@ -143,9 +143,11 @@ class EditarNotaActivity : AppCompatActivity() {
         nota.fallas = binding.inputFallas.text.toString().trim()
         nota.condicionesEquipo = binding.inputCondiciones.text.toString().trim()
         nota.anotaciones = binding.inputAnotaciones.text.toString().trim()
-        nota.cargoCargador = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioCargador.id
-        nota.soloEquipo = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioSoloEquipo.id
-        nota.dejoAmbos = binding.radioGroupEntrega.checkedRadioButtonId == binding.radioAmbos.id
+        nota.cargoCargador = binding.checkCargador.isChecked
+        nota.dejoTeclado = binding.checkTeclado.isChecked
+        nota.dejoMouse = binding.checkMouse.isChecked
+        nota.dejoCable = binding.checkCable.isChecked
+        nota.otrosAccesorios = binding.inputOtrosAccesorios.text.toString().trim()
         nota.refacciones = refacciones.toMutableList()
         nota.costoInicial = binding.inputCostoInicial.text.toString().toDoubleOrNull() ?: 0.0
         nota.anticipo = binding.inputAnticipo.text.toString().toDoubleOrNull() ?: 0.0
